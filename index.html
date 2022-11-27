@@ -34,32 +34,50 @@
 
             camera.updateProjectionMatrix();
         })
-
-        
+   
 
 //  END  SETUP SCENE
 
+        // SFERA
         var geometry = new THREE.SphereGeometry(1,100,200);
         var material = new THREE.MeshLambertMaterial({color: 0xFFCC00});
         var mesh = new THREE.Mesh(geometry,material);
         mesh.position.x=2;
 
-        // provo ad aggiungere anche un cubo 
+        // CUBO 
         var cube = new THREE.BoxGeometry(0.5,0.2,3);
         var materialCube = new THREE.MeshLambertMaterial({color: 0xAA3200});
         var cubemesh = new THREE.Mesh(cube,materialCube);
         cubemesh.position.y=2;
+        cubemesh.rotation.set(45,45,45);
 
+        // LUCI
         var light=new THREE.PointLight(0xFFFFFF,1,500);
         light.position.set(10,0,25);
 
 
-
-        
+        // Aggiungo le mesh alla scena a infino renderizzo nel browser 
         scene.add(cubemesh);
         scene.add(mesh);
         scene.add(light);
-        renderer.render(scene, camera);
+
+
+
+        // REQUEST ANIMATION FRAME , SENZA QUESTO LE MESH SI SCALANO CON IL BROWSER 60pfs
+        // renderer.render(scene, camera);
+
+        var render=function(){
+            requestAnimationFrame(render);
+
+            // qui è dove creiamo animazioni 
+
+            mesh.rotation.x += 0.01;
+            cubemesh.rotation.y += 0.02;
+
+            renderer.render(scene, camera);
+        }
+
+        render();
     </script>
 </body>
 </html>
